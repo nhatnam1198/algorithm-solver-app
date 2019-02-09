@@ -1,0 +1,12 @@
+
+public class FirstComeFirstServe extends AppData{
+	private int processes;
+	private int[] arrivalTime;
+	private int[] burstTime;
+	public FirstComeFirstServe(int []arrivalTime, int []burstTime, int processes) {
+		
+	}
+	public void display() {
+		AppData
+	}
+}

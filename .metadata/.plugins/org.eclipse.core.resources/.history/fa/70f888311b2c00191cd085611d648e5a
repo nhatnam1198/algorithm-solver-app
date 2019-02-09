@@ -1,0 +1,26 @@
+
+public class FirstComeFirstServe{
+	private int processes;
+	private int[] arrivalTime;
+	private int[] burstTime;
+	//constructor
+	public FirstComeFirstServe(int []arrivalTime, int []burstTime, int processes) {
+		this.arrivalTime = arrivalTime;
+		this.burstTime = burstTime;
+		this.processes = processes;
+	}
+	public FirstComeFirstServe() {
+		this.arrivalTime = null;
+		this.burstTime = null;
+		this.processes = 0;
+	}
+	
+	public void timThoiGianTrungBinh(int[] arrivalTime, int[] burstTime) {
+		int waitingTime[arrivalTime.length];
+		int[] 
+	}
+	
+	public void display() {
+		timThoiGianTrungBinh(arrivalTime, burstTime);
+	}
+}

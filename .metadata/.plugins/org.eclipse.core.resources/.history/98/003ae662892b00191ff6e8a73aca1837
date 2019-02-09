@@ -1,0 +1,7 @@
+
+public class FirstComeFirstServe extends AppData{
+	private int 
+	public void display() {
+		AppData
+	}
+}

@@ -1,0 +1,6 @@
+
+public class FirstComeFirstServe extends AppData{
+	public void display() {
+		System.out.print(arrivalTime[2]);
+	}
+}

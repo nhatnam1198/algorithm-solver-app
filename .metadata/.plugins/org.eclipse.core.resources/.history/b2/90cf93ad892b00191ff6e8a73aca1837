@@ -1,0 +1,42 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class AppData {
+	private int processes;
+	private int[] arrivalTime;
+	private int[] burstTime;
+	private BufferedReader in;
+	public void readTextFile() throws Exception {
+		File textFile = new File("C:\\java\\QuaMon\\LapLich\\input.txt");
+		in = new BufferedReader(new FileReader(textFile));
+		String st;
+		st = in.readLine();
+		processes = Integer.parseInt(st); // so process
+		arrivalTime = new int[processes];      //cap phat bo nho
+		burstTime= new int[processes];
+		
+		System.out.println(processes);
+		for (int i = 0; i < processes; i++) {
+			st = in.readLine();
+			setDataEachProcess(arrivalTime, st, i, "^\\d+");
+			setDataEachProcess(burstTime, st, i, "\\d+$");
+			System.out.println(st);
+		}
+		
+		String getLastLine = "";
+		while((st = in.readLine()) != null) {
+			getLastLine = st;
+		}
+	}
+	
+	private void setDataEachProcess(int []arr, String st, int i, String regex) {
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(st);
+		while(matcher.find()) {
+			arr[i] = Integer.parseInt(matcher.group());
+		}
+	}
+}
