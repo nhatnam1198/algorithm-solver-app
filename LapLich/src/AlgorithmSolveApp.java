@@ -1,10 +1,9 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class AlgorithmSolveApp {
-	private int processes;
-	private int[] arrivalTime;
-	private int[] burstTime;
+	private Process[] processes;
 	private int quantum;
 	private BufferedReader in;
 	public void readTextFile() throws Exception {
@@ -12,13 +11,14 @@ public class AlgorithmSolveApp {
 		in = new BufferedReader(new FileReader(textFile));
 		String st;
 		st = in.readLine();
-		processes = Integer.parseInt(st); // so process
-		arrivalTime = new int[processes];      //cap phat bo nho
-		burstTime= new int[processes];
-		for (int i = 0; i < processes; i++) {
+		int soTienTrinh = Integer.parseInt(st); // so process
+		processes = new Process[soTienTrinh];      //cap phat bo nho
+		for(int i=0; i< processes.length; i++) {
+			processes[i] = new Process();
+		}
+		for (int i = 0; i < soTienTrinh; i++) {
 			st = in.readLine();
-			setDataEachProcess(arrivalTime, st, i, "^\\d+");
-			setDataEachProcess(burstTime, st, i, "\\d+$");
+			setDataEachProcess(processes, st, i, "^\\d+", "\\d+$");
 		}
 		
 		String getLastLine = "";
@@ -29,33 +29,40 @@ public class AlgorithmSolveApp {
 		setQuantum(getLastLine);
 	}
 	
+	private void setDataEachProcess(Process[] processes, String st, int i, String regex1, String regex2) {
+		Pattern pattern = Pattern.compile(regex1);
+		Matcher matcher = pattern.matcher(st);
+		while(matcher.find()) {
+			processes[i].setArrivalTime(Integer.parseInt(matcher.group()));
+		}
+		pattern = Pattern.compile(regex2);
+		matcher = pattern.matcher(st);
+		while(matcher.find()) {
+			processes[i].setBurstTime(Integer.parseInt(matcher.group()));
+		}
+	}
+	
 	private void setQuantum(String quantumString) {
 		quantum = Integer.parseInt(quantumString);
 	}
 	
-	private void setDataEachProcess(int []arr, String st, int i, String regex) {
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(st);
-		while(matcher.find()) {
-			arr[i] = Integer.parseInt(matcher.group());
-		}
-	}
-	
 	public void displayInfo() {
 		System.out.printf("Process    Order" + "     Arrival time" + "     Duration\n"); 
-		for (int i = 0; i < processes; i++) {
-			System.out.println("P" + (i+1)+"          " +(i+1) + "         " + arrivalTime[i]  + "               "+ burstTime[i]);
+		for (int i = 0; i < processes.length; i++) {
+			System.out.println("P" + (i+1)+"          " +(i+1) + "         " + processes[i].getArrivalTime()  + "               "+ processes[i].getBurstTime());
 		}
 	}
 	
 	public void run() throws Exception {
 		readTextFile();
 		displayInfo();
-		FirstComeFirstServe FCFS = new FirstComeFirstServe(arrivalTime, burstTime, processes);
+		FirstComeFirstServe FCFS = new FirstComeFirstServe(processes);
 		FCFS.display();
-		/*
-		ShortestJobFirst SJF = new ShortestJobFirst(arrivalTime, burstTime, processes);
+		ShortestJobFirst SJF = new ShortestJobFirst(processes);
 		SJF.display();
+		ShortestJobFirst_Preemptive SRN = new ShortestJobFirst_Preemptive(processes);
+		SRN.display();
+		/*
 		RoundRobin RR = new RoundRobin(arrivalTime, burstTime, processes, quantum);
 		RR.display();*/
 	}

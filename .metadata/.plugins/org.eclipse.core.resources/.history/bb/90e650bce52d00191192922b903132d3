@@ -1,0 +1,7 @@
+
+public class Wrapper {
+	Process[] processes;
+	Wrapper(A a){
+		this.a = a;
+	}
+}

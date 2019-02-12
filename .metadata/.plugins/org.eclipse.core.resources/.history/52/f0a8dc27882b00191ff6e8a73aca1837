@@ -1,6 +1,0 @@
-
-public class FirstComeFirstServe extends AppData{
-	public void display() {
-		
-	}
-}

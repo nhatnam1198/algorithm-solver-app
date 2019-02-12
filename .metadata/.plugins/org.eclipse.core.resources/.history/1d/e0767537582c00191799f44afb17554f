@@ -1,0 +1,15 @@
+
+public class ShortestJobFirst {
+	private int[] arrivalTime;
+	private int[] burstTime;
+	//constructor
+	public ShortestJobFirst(int []arrivalTime, int []burstTime) {
+		this.arrivalTime = arrivalTime;
+		this.burstTime = burstTime;
+		this.processes = processes;
+	}
+	
+	public void display() {
+		
+	}
+}

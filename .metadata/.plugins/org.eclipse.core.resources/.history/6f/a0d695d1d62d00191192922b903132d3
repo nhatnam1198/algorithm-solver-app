@@ -1,0 +1,24 @@
+
+public class Process {
+	private int arrivalTime;
+	private String arrivalTime1;
+	private int burstTime;
+	int getArrivalTime() {
+		return arrivalTime;
+	}
+	
+	int getBurstTime(){
+		return burstTime;
+	}
+	void setArrivalTime(int para) {
+		this.arrivalTime = para;
+	}
+	
+	void setArrivalTime1(String para) {
+		this.arrivalTime1 = para;
+	}
+	
+	void setBurstTime(int para){
+		this.burstTime = para;
+	}
+}

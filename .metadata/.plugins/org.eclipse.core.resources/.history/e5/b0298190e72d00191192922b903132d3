@@ -1,0 +1,27 @@
+import java.util.Arrays;
+
+public class ShortestJobFirst {
+	private Process[] processes;
+	//constructor
+	public ShortestJobFirst(Process[] sameProcesses) {
+		this.processes = sameProcesses;
+	}
+	
+	public void swapWrapper(Wrapper pro1, Wrapper pro2) {
+		Process temp = pro1.process;
+		pro1.process = pro2.process;
+		pro2.process = temp;
+	}
+	
+	void swap(Process processes1, Process processes2) {
+		Wrapper wrap1 = new Wrapper(processes1);
+		Wrapper wrap2 = new Wrapper(processes2);
+		swapWrapper(wrap1, wrap2);
+		System.out.println(wrap1.process.getArrivalTime());
+		System.out.println(wrap2.process.getArrivalTime());
+	}
+	
+	public void display() {
+		swap(processes[0], processes[1]);
+		
+	}

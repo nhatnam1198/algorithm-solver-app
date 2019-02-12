@@ -1,0 +1,43 @@
+import java.util.Arrays;
+
+public class ShortestJobFirst {
+	private Process[] processes;
+	//constructor
+	public ShortestJobFirst(Process[] sameProcesses) {
+		this.processes = sameProcesses;
+	}
+	
+	public void display() {
+		timThoiGianTrungBinh(processes);
+	}
+	
+	void timThoiGianTrungBinh(Process[] processes) {
+		//sap xep tien trinh theo arrival time
+		for (int i = 0; i < processes.length-1; i++) {
+			for (int j = i+1; j < processes.length; j++) {
+				if(processes[i].getArrivalTime() > processes[j].getArrivalTime()) {
+					Process temp = processes[i];
+					processes[i] = processes[j];
+					processes[j] = temp;
+				}
+			}
+		}
+		
+		int serviceTime = 0;
+		for (int i = 0; i < processes.length-1; i++) {
+			int serviceTime =+ processes[i].getBurstTime();
+			int min = processes[i+1].getBurstTime();
+			for (int j = i+1; j < processes.length; j++) {
+				if(processes[j].getArrivalTime() < serviceTime && processes[j].getBurstTime() < min) {
+					min = processes[j].getBurstTime();
+					Process temp = processes[i];
+					processes[i] = processes[j];
+					processes[j] = temp;
+				}
+			}
+		}
+		for (int i = 0; i < processes.length; i++) {
+			System.out.println(processes[i].getArrivalTime() + "    "  + processes[i].getBurstTime());
+		}
+	}
+}

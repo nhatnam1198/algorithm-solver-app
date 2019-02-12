@@ -1,0 +1,17 @@
+import java.util.Arrays;
+
+public class ShortestJobFirst {
+	private Process[] processes;
+	//constructor
+	public ShortestJobFirst(Process[] sameProcesses) {
+		this.processes = sameProcesses;
+	}
+	
+	public void display() {
+		timThoiGianTrungBinh(processes);
+	}
+	
+	void timThoiGianTrungBinh(Process[] processes) {
+		
+	}
+}

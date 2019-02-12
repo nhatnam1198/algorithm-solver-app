@@ -1,0 +1,16 @@
+import java.util.Arrays;
+
+public class ShortestJobFirst {
+	private Process[] processes;
+	//constructor
+	public ShortestJobFirst(Process[] sameProcesses) {
+		this.processes = sameProcesses;
+	}
+	
+	public void display() {
+		Arrays.sort();
+		for (int i = 0; i < arrivalTime.length; i++) {
+			System.out.print();
+		}
+	}
+}
