@@ -1,0 +1,99 @@
+
+public class ShortestJobFirst_Preemptive {
+	private Process[] processes;
+	private int imin;
+	private int min = 9999999;
+	private int donViThoiGian = 0;
+	private boolean kiemTra = false;/*bien kiem tra nay co tac dung kiem tra co 
+	tien trinh nao thoa man de min khi trong don vi thoi gian nay hay khong*/
+	private int temp = 0;
+	private boolean check = false;
+	//constructor
+	public ShortestJobFirst_Preemptive(Process[] sameProcesses) {
+		this.processes = sameProcesses;
+	}
+	
+	public ShortestJobFirst_Preemptive() {
+		this.processes = null;
+	}
+	
+	public void display() {
+		System.out.println("SHORTEST JOB FIRST ALGORITHM");
+		timThoiGianTrungBinh(processes);
+	}
+	
+	public void timTienTrinhCoBurstTimeMin(int[] thoiGianThucHien, int olderImin) {
+		for (int i = 0; i < processes.length; i++) {
+			if((thoiGianThucHien[i]< min && thoiGianThucHien[i] > 0) &&(processes[i].getArrivalTime() <= donViThoiGian)) {
+				min = thoiGianThucHien[i];
+				imin = i;
+				kiemTra = true;
+				temp++;
+			}
+		}
+		if(olderImin != imin) {
+			check = true;
+		}
+	}
+	
+	public void timThoiGianTrungBinh(Process[] processes) {
+		int processComplete = 0;
+
+		int waitingTime=0;
+		int thoiGianHoanThanh; // Moc thoi gian hoan thanh khi chuyen doi giua cac tien trinh
+		int[] thoiGianThucHien = new int[processes.length];   //bien temp cua burstTime
+		for(int i=0; i< processes.length; i++) {
+			thoiGianThucHien[i] = processes[i].getBurstTime();        
+		}
+								
+		int olderImin;
+		//Lap cho den khi tat ca cac tien trinh ket thuc
+		while(processComplete != processes.length) {  
+			olderImin = imin;
+			timTienTrinhCoBurstTimeMin(thoiGianThucHien, olderImin); //lay thoi gian thuc hien tien trinh va chi so cua tien trinh do
+			//Neu khong co tien trinh nao thoa man dieu kien tren
+			if(check == true) {
+				System.out.print("P" + (olderImin+1) + "-"+ (donViThoiGian) + "-");
+				check= false;
+			}
+			if(temp == 1) {
+				System.out.print(processes[imin].getArrivalTime() + "-");
+				temp++;
+			}
+			if(kiemTra == false) {
+				donViThoiGian++;
+				continue;
+			}
+			thoiGianThucHien[imin]--;
+			//cap nhat lai bien min
+			min = thoiGianThucHien[imin];
+			/*Khi tien trinh ket thuc thi min se = 0 vi vay can phai reset lai bien min de so sanh
+			trong vong lap for cua tien trinh tiep theo*/
+			if(min <=0) {
+				min = 999999; 
+			}
+			
+			//Neu mot tien trinh ket thuc thi tang bien dem tien trinh va tinh thoi gian cho
+			if(thoiGianThucHien[imin] == 0) {
+				processComplete++;
+				kiemTra = false;
+				thoiGianHoanThanh = (donViThoiGian+1);
+				waitingTime  += thoiGianHoanThanh - processes[imin].getBurstTime() - processes[imin].getArrivalTime();
+			}
+			donViThoiGian++;
+		}
+		System.out.print("P" + (imin+1) + "-"+ (donViThoiGian));
+		System.out.print("\n");
+		System.out.println(waitingTime);
+		timThoiChoTrungBinh(waitingTime);	
+		timThoiGianLuuTrungBinh(waitingTime);
+	}
+	
+	public void timThoiChoTrungBinh(int waitingTime) {
+		System.out.println("Thoi gian cho trung binh la: " + (float)waitingTime/processes.length);
+	}
+	
+	public void timThoiGianLuuTrungBinh(int waitingTime) {
+		int thoiGianLuu = waitingTime + 
+	}
+}

@@ -2,7 +2,7 @@ import java.util.stream.IntStream;
 
 public class FirstComeFirstServe{
 	private Process[] processes;
-	
+	private int getFinishTime;
 	
 	//constructor
 	public FirstComeFirstServe(Process[] sameProcesses) {
@@ -21,9 +21,9 @@ public class FirstComeFirstServe{
 		int []waitingTime = new int[processes.length];
 		int []turnAroundTime = new int[processes.length];
 		timThoiGianCho(processes, waitingTime);
-		timThoiGianThucHien(processes, waitingTime, turnAroundTime);
+		timThoiGianLuu(processes, waitingTime, turnAroundTime);
 		System.out.println("Thoi gian cho trung binh la: " + IntStream.of(waitingTime).sum()/(float)processes.length);
-		System.out.println("Thoi gian thuc hien trung binh la: " +  IntStream.of(turnAroundTime).sum()/(float)processes.length);
+		System.out.println("Thoi gian luu trung binh la: " +  IntStream.of(turnAroundTime).sum()/(float)processes.length);
 	}
 	
 	public void timThoiGianCho(Process[] processes, int[] waitingTime) {
@@ -39,13 +39,16 @@ public class FirstComeFirstServe{
 			if(waitingTime[i] < 0) {
 				waitingTime[i] = 0;
 			}
+			getFinishTime = thoiGianBatDauPhucVu[i] + processes[i].getBurstTime();
+			System.out.print("P" + (i) + "-" + thoiGianBatDauPhucVu[i] + "-");
 		}
+		System.out.println("P" + (processes.length) + "-" + getFinishTime );
 		for (int i = 0; i < processes.length; i++) {
 			System.out.println("Thoi gian cho P"+ (i+1) + ": " + waitingTime[i]);
 		}
 	}
 	
-	public void timThoiGianThucHien(Process[] processes, int[] waitingTime, int[] turnAroundTime) {
+	public void timThoiGianLuu(Process[] processes, int[] waitingTime, int[] turnAroundTime) {
 		for (int i = 0; i < processes.length; i++) {
 			turnAroundTime[i] = waitingTime[i] + processes[i].getBurstTime();
 			System.out.println("Thoi gian thuc hien P"+ (i+1)+ ": " + turnAroundTime[i]);
