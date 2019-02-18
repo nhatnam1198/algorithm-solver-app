@@ -1,7 +1,0 @@
-
-public class Wrapper {
-	A a;
-	Wrapper(A a){
-		this.a = a;
-	}
-}

@@ -1,0 +1,54 @@
+
+public class RoundRobin {
+	private Process[] processes;
+	private int quantum;
+
+	public RoundRobin(Process[] processes, int quantum) {
+		super();
+		this.processes = processes;
+		this.quantum = quantum;
+	}
+	public RoundRobin() {
+		this.processes = null;
+		this.quantum = 0;
+	}
+	
+	public void display() {
+		tinhThoiGianTrungBinh();
+	}
+	
+	public void tinhThoiGianTrungBinh() {
+		tinhThoiGianChoTrungBinh();
+	}
+	
+	public void tinhThoiGianChoTrungBinh() {
+		boolean check = true;
+		int time = 0;
+		int[] burstTimeTemp = new int[processes.length];
+		int[] arrivalTimeTemp = new int [processes.length];
+		int[] waitingTime = new int[processes.length];
+		for (int i = 0; i < processes.length; i++) {
+			burstTimeTemp[i] = processes[i].getArrivalTime();
+			arrivalTimeTemp[i] = processes[i].getBurstTime();
+		}
+		//Lap cho den khi cac tien trinh da xong het
+		while(check == true) {
+			for (int i = 0; i < processes.length; i++) {
+				if(processes[i].getArrivalTime() <= time) {
+					if(burstTimeTemp[i] > quantum) {
+						
+	
+					}else {  //Neu burstTime nho hon quantum thi tien trinh nay se ket thuc o day, phai lay duoc moc thoi gian tien trinh ket thuc
+						time = time + burstTimeTemp[i];
+						waitingTime[i] += time - processes[i].getBurstTime() - processes[i].getArrivalTime();
+						
+					}
+				}else {
+					//Neu tu dau chua co tien trinh nao den thi tang don vi thoi gian len 1 va quet lai tu dau(i--)
+					time++;
+					i--;
+				}
+			}
+		}
+	}
+}

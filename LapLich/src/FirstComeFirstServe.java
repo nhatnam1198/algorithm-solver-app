@@ -22,6 +22,7 @@ public class FirstComeFirstServe{
 		int []turnAroundTime = new int[processes.length];
 		timThoiGianCho(processes, waitingTime);
 		timThoiGianLuu(processes, waitingTime, turnAroundTime);
+		//Ham IntStream.of().sum la tinh tong cua 1 array Int
 		System.out.println("Thoi gian cho trung binh la: " + IntStream.of(waitingTime).sum()/(float)processes.length);
 		System.out.println("Thoi gian luu trung binh la: " +  IntStream.of(turnAroundTime).sum()/(float)processes.length);
 	}
@@ -30,12 +31,12 @@ public class FirstComeFirstServe{
 		int []thoiGianBatDauPhucVu = new int[processes.length];
 		thoiGianBatDauPhucVu[0] = 0;
 		waitingTime[0] = processes[0].getArrivalTime();
-		//Di tim moc thoi gian bat dau phuc vu cho tien trinh
 		for (int i = 1; i < processes.length; i++) {
+			//Tinh moc thoi gian bat dau cua moi tien trinh
 			thoiGianBatDauPhucVu [i] += thoiGianBatDauPhucVu[i-1] + processes[i-1].getBurstTime();
 			waitingTime[i] = thoiGianBatDauPhucVu[i] - processes[i].getArrivalTime();
 			/*Trong truong hop ma thoi gian den cua 1 tien trinh lon hon thoi gian thoi gian hoan thanh tien trinh 
-			 cua tien cuoi cung(tuc thoi gian doi < 0) thi tien trinh do se co thoi gian doi bang 0*/
+			truoc do thi tien trinh do se co thoi gian doi bang 0*/
 			if(waitingTime[i] < 0) {
 				waitingTime[i] = 0;
 			}

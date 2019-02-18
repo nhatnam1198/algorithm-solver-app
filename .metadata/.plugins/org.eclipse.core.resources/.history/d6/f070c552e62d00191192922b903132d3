@@ -1,7 +1,0 @@
-
-public class Wrapper {
-	Process processes;
-	Wrapper(Process a){
-		this.processes = a;
-	}
-}

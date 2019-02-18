@@ -23,20 +23,6 @@ public class ShortestJobFirst_Preemptive {
 		timThoiGianTrungBinh(processes);
 	}
 	
-	public void timTienTrinhCoBurstTimeMin(int[] thoiGianThucHien, int olderImin) {
-		for (int i = 0; i < processes.length; i++) {
-			if((thoiGianThucHien[i]< min && thoiGianThucHien[i] > 0) &&(processes[i].getArrivalTime() <= donViThoiGian)) {
-				min = thoiGianThucHien[i];
-				imin = i;
-				kiemTra = true;
-				temp++;
-			}
-		}
-		if(olderImin != imin) {
-			check = true;
-		}
-	}
-	
 	public void timThoiGianTrungBinh(Process[] processes) {
 		int processComplete = 0;
 
@@ -50,21 +36,42 @@ public class ShortestJobFirst_Preemptive {
 		int olderImin;
 		//Lap cho den khi tat ca cac tien trinh ket thuc
 		while(processComplete != processes.length) {  
-			olderImin = imin;
-			timTienTrinhCoBurstTimeMin(thoiGianThucHien, olderImin); //lay thoi gian thuc hien tien trinh va chi so cua tien trinh do
-			//Neu khong co tien trinh nao thoa man dieu kien tren
+			olderImin = imin; //bien luu chi so cua tien trinh truoc do
+			//Tim tien trinh co thoi gian thuc hien nho nhat, dat ca vong for nay la dieu kien M
+			for (int i = 0; i < processes.length; i++) {
+				if((thoiGianThucHien[i]< min && thoiGianThucHien[i] > 0) &&(processes[i].getArrivalTime() <= donViThoiGian)) {
+					min = thoiGianThucHien[i];
+					imin = i;
+					kiemTra = true;
+					temp++;
+				}
+			}
+			
+			//Neu ma tien trinh thoa man dieu kien M the cho vao tien trinh dang chay
+			if(olderImin != imin) {
+				check = true;
+			}
+			
+			//lay thoi gian thuc hien tien trinh va chi so cua tien trinh do
+			
 			if(check == true) {
 				System.out.print("P" + (olderImin+1) + "-"+ (donViThoiGian) + "-");
 				check= false;
 			}
+			
+			//Lay arrivalTime cua tien trinh dau tien thoa man dieu kien M
 			if(temp == 1) {
 				System.out.print(processes[imin].getArrivalTime() + "-");
 				temp++;
 			}
+			
+			//Neu khong co tien trinh nao thoa man dieu kien M, thi tang bien dem thoi gian len 1 don vi
 			if(kiemTra == false) {
 				donViThoiGian++;
 				continue;
 			}
+			
+			//Sau moi mot don vi thoi gian thi burstTime tien trinh dang thuc hien se bi giam di 1 don vi
 			thoiGianThucHien[imin]--;
 			//cap nhat lai bien min
 			min = thoiGianThucHien[imin];
@@ -99,6 +106,6 @@ public class ShortestJobFirst_Preemptive {
 		for (int i = 0; i < processes.length; i++) {
 			s += processes[i].getBurstTime();
 		}
-		System.out.print("Thoi gian luu trung binh la: " + (waitingTime + s)/(float)processes.length);
+		System.out.println("Thoi gian luu trung binh la: " + (waitingTime + s)/(float)processes.length);
 	}
 }
