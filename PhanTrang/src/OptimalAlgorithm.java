@@ -1,36 +1,44 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class LeastRecentlyUsed {
+public class OptimalAlgorithm {
 	private int[] pages;
 	private int[] frames;
 	private LinkedList<Integer> framesList = new LinkedList<Integer>();
-	public LeastRecentlyUsed(int[] pages, int[] frames) {
-		this.pages = pages;
-		this.frames = frames;
-	}
-	
-	public LeastRecentlyUsed() {
-		this.pages = null;
-		this.frames = null;
-	}
 	
 	public void display() {
 		findPageFaults();
 	}
 	
+	public OptimalAlgorithm(int[] pages, int[] frames) {
+		this.pages = pages;
+		this.frames = frames;
+	}
+	
+	public OptimalAlgorithm() {
+		this.pages = null;
+		this.frames = null;
+	}
+
 	public void findPageFaults() {
 		//Bien chi vi tri can thay trang trong frame
 		int viTriThamChieu = 0;
 		//Bien dem so loi
 		int faults = 0;
-		ArrayList<Integer> pagesArr = new ArrayList<Integer>();
+		//Danh sach nhung trang con lai
+		LinkedList<Integer> pagesLeft = new LinkedList<Integer>();
 		//Khoi tao framesList
 		for (int i = 0; i < frames.length; i++) {
 			framesList.add(-10);
 		}
 		
+		//Khoi tao mang pagesLeft bang cac trang de bai cho ( ti nua se xoa di 1 trang sau moi von lap)
+		for (int i = 0; i < pages.length; i++) {
+			pagesLeft.add(pages[i]);
+		}
+		//Mang 2 chieu luu chi so cua frame de phuc vu viec in ra man hinh
 		int[][] framesGraph = new int[frames.length][pages.length];
+		//Bien danh dau trang nao loi 
 		String[] danhDau = new String[pages.length];
 		for (int i = 0; i < pages.length; i++) {
 			//Neu do dai cua frame lon hon so trang thi
@@ -55,8 +63,6 @@ public class LeastRecentlyUsed {
 				//Them nhung trang dau tien vao framesList, so loi bang so frame
 				if(i < frames.length) {
 					framesList.set(i, pages[i]);
-					//Bat dau ghi cac trang dau vao pagesArr
-					pagesArr.add(pages[i]);
 					//Gan gia tri cho mang 2 chieu framesGraph de phuc vu in ra man hinh
 					for (int j = frames.length-1; j >= 0; j--) {  
 						framesGraph[j][i] = framesList.get(j);
@@ -64,30 +70,24 @@ public class LeastRecentlyUsed {
 					danhDau[i] = "F";
 					faults++;
 				}else {
-					/*Neu trang nay trung voi trang da co trong pagesArr thi xoa trung bi trung trong pageArr
-					va them trang pages[i]*/
-					if(pagesArr.indexOf(pages[i]) > 0) {
-						pagesArr.remove(pagesArr.indexOf(pages[i]));
-						pagesArr.add(pages[i]);
-					}//Neu khong bi trung thi them trang vao pagesArr nhu binh thuong
-					else {
-						pagesArr.add(pages[i]);
-					}
-					//Neu trong frame khong chua trang hien tai thi se bi loi
 					if(!framesList.contains(pages[i])) {
-						//Lay vi tri can thay trong frame
-						viTriThamChieu = framesList.indexOf(pagesArr.get(pagesArr.size() - 1 - frames.length));
-						//Thay frame hien tai voi gia tri tham chieu
+						for (int j = 0; j < frames.length; j++) {
+							if(pagesLeft.indexOf(framesList.get(j)) > pagesLeft.indexOf(framesList.get(viTriThamChieu))){
+								viTriThamChieu = j;
+							}
+						}	
+						for (int j = 0; j < frames.length; j++) {
+							if(!pagesLeft.contains(framesList.get(j))) {
+								viTriThamChieu = j;
+							}
+						}
 						framesList.set(viTriThamChieu, pages[i]);
-						//Gan gia tri cho mang 2 chieu framesGraph de phuc vu in ra man hinh
 						for (int j = 0; j < frames.length; j++) {  
 							framesGraph[j][i] = framesList.get(j);
 						}
 						danhDau[i] = "F";
 						faults++;
-					}//Neu trong frame chua trang hien tai thi k bi loi nen cach ra
-					else {
-						//Gia tri bang gia tri cua trang truoc do
+					}else {
 						for (int j = 0; j < frames.length; j++) {  
 							framesGraph[j][i] = framesGraph[j][i-1];
 						}
@@ -95,6 +95,8 @@ public class LeastRecentlyUsed {
 					}
 				}
 			}
+			//Sau moi 1 trang thi xoa trang do trong pagesLeft
+			pagesLeft.remove();
 		}
 		//In ra man hinh
 		System.out.print("Trang" + "     ");
@@ -124,6 +126,7 @@ public class LeastRecentlyUsed {
 		for (int i = 0; i < pages.length; i++) {
 			System.out.print(danhDau[i] + "    ");
 		}
+		
 		System.out.println();
 		System.out.println("So loi trang: " + faults);
 	}

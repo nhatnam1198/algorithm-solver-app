@@ -95,6 +95,7 @@ public class FirstInFirstOut {
 		}
 		
 		//In va danh dau trang loi
+		System.out.print("Trang" + "     ");
 		for (int i = 0; i < pages.length; i++) {
 			System.out.print(pages[i] + "    ");	
 		}
@@ -104,6 +105,7 @@ public class FirstInFirstOut {
 		}
 		System.out.println();
 		for (int i = 0; i < framesGraph.length; i++) {
+			System.out.print("Frame" + (i+1)+ "    ");
 			for (int j = 0; j < pages.length; j++) {
 				if (framesGraph[i][j] < 0) { 
 					System.out.print("     ");
@@ -112,7 +114,7 @@ public class FirstInFirstOut {
 			}
 			System.out.println();
 		}
-		
+		System.out.print("          ");
 		for (int i = 0; i < pages.length; i++) {
 			System.out.print(danhDau[i] + "    ");
 		}

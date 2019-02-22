@@ -34,9 +34,11 @@ public class PageReplacementAlgorithmApp {
 		System.out.println("--------------------------------------------");
 		System.out.println("FIRST IN FIRST OUT ALGORITHM");
 		
-		/*FirstInFirstOut FIFO = new FirstInFirstOut(pages, frames);
-		FIFO.display();*/
+		FirstInFirstOut FIFO = new FirstInFirstOut(pages, frames);
+		FIFO.display();
 		LeastRecentlyUsed LRU = new LeastRecentlyUsed(pages, frames);
 		LRU.display();
+		OptimalAlgorithm OPT = new OptimalAlgorithm(pages, frames);
+		OPT.display();
 	}
 }
