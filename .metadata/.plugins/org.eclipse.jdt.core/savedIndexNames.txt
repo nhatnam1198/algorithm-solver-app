@@ -1,7 +1,6 @@
 INDEX VERSION 1.131+C:\java\QuaMon\.metadata\.plugins\org.eclipse.jdt.core
 1180489742.index
 1713295793.index
-1158143225.index
 866495595.index
 1607282252.index
 1138347882.index

@@ -57,14 +57,14 @@ public class AlgorithmSolveApp {
 		readTextFile();
 		displayInfo();
 		System.out.println("----------------------------------------------");
-		/*FirstComeFirstServe FCFS = new FirstComeFirstServe(processes);
+		FirstComeFirstServe FCFS = new FirstComeFirstServe(processes);
 		FCFS.display();
 		System.out.println("----------------------------------------------");
 		ShortestJobFirst SJF = new ShortestJobFirst(processes);
 		SJF.display();
 		System.out.println("----------------------------------------------");
 		ShortestJobFirst_Preemptive SRN = new ShortestJobFirst_Preemptive(processes);
-		SRN.display();*/
+		SRN.display();
 		System.out.println("----------------------------------------------");
 		RoundRobin RR = new RoundRobin(processes, quantum);
 		RR.display();
